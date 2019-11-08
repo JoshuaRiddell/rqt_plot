@@ -122,12 +122,17 @@ class Plot(Plugin):
     def save_settings(self, plugin_settings, instance_settings):
         self._data_plot.save_settings(plugin_settings, instance_settings)
         instance_settings.set_value('autoscroll', self._widget.autoscroll_checkbox.isChecked())
+        instance_settings.set_value('autoscale_y', self._widget.autoscale_y_checkbox.isChecked())
         instance_settings.set_value('topics', pack(self._widget._rosdata.keys()))
 
     def restore_settings(self, plugin_settings, instance_settings):
         autoscroll = instance_settings.value('autoscroll', True) in [True, 'true']
         self._widget.autoscroll_checkbox.setChecked(autoscroll)
         self._data_plot.autoscroll(autoscroll)
+
+        autoscale_y_switch = instance_settings.value('autoscale_y_switch', True) in [True, 'true']
+        self._widget.autoscale_y_checkbox.setChecked(autoscale_y_switch)
+        self._data_plot.autoscale_y(autoscale_y_switch)
 
         self._update_title()
 

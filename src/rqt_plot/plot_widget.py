@@ -160,6 +160,7 @@ class PlotWidget(QWidget):
         self.data_plot = data_plot
         self.data_plot_layout.addWidget(self.data_plot)
         self.data_plot.autoscroll(self.autoscroll_checkbox.isChecked())
+        self.data_plot.autoscale_y(self.autoscale_y_checkbox.isChecked())
 
         # setup drag 'n drop
         self.data_plot.dropEvent = self.dropEvent
@@ -236,6 +237,12 @@ class PlotWidget(QWidget):
     @Slot(bool)
     def on_autoscroll_checkbox_clicked(self, checked):
         self.data_plot.autoscroll(checked)
+        if checked:
+            self.data_plot.redraw()
+
+    @Slot(bool)
+    def on_autoscale_y_checkbox_clicked(self, checked):
+        self.data_plot.autoscale_y(checked)
         if checked:
             self.data_plot.redraw()
 

@@ -133,6 +133,7 @@ class DataPlot(QWidget):
         self._color_index = 0
         self._markers_on = False
         self._autoscroll = True
+        self._autoscale_y_switch = True
 
         self._autoscale_x = True
         self._autoscale_y = DataPlot.SCALE_ALL
@@ -301,6 +302,10 @@ class DataPlot(QWidget):
     def autoscroll(self, enabled=True):
         """Enable or disable autoscrolling of the plot"""
         self._autoscroll = enabled
+
+    def autoscale_y(self, enabled=True):
+        """Enable or disable autoscaling of the plot"""
+        self._autoscale_y_switch = enabled
 
     def redraw(self):
         self._redraw.emit()
@@ -477,7 +482,8 @@ class DataPlot(QWidget):
             x_limit[1] = 1.0
 
         y_limit = [numpy.inf, -numpy.inf]
-        if self._autoscale_y:
+        # if we have been given autoscaling settings, and autoscaling has been enabled
+        if self._autoscale_y and self._autoscale_y_switch:
             # if we're extending the y limits, initialize them with the
             # current limits
             if self._autoscale_y & DataPlot.SCALE_EXTEND:
